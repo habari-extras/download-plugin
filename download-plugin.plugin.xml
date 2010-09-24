@@ -2,13 +2,15 @@
 <pluggable type="plugin">
 	<name>Download Plugin</name>
 	<url>http://wiki.lulug.org/prog/habari/download-plugin</url>
-	<author url="http://lulug.org/~lifelog/">lifeisfoo</author>
+	<author url="http://forkwait.net/blog">Alessandro Miliucci</author>
 	<license url="http://www.apache.org/licenses/LICENSE-2.0.html">Apache Software License 2.0</license>
-	<version>0.1</version>
+	<version>0.1.1</version>
 	<description><![CDATA[Download and install plugins]]></description>
 	<copyright>2010</copyright>
 	<help>
 		<value><![CDATA[
-			<p>Download plugins and unzip in the plugins directory them from the Habari administration interface.</p>
+			<p>Download plugins and unzip them in the plugins directory, from the Habari administration interface. Currently supports only zip archives.</p>
 		]]></value>	
 </plugin>
+
+

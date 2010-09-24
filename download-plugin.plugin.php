@@ -3,12 +3,12 @@
 /**
  * DownloadPlugin Class
  *
- * This class provides  functionality for downloading and installing
+ * This class provides functionality for downloading and installing
  * plugins directly from a url.
  *
  * @todo Document methods
  * @todo gzip,bzip,tar support
- * @todo better filename and fletype recognition (e.g. from url like http://host/filenamewithourextension)
+ * @todo better filename and filetype recognition (e.g. from url like http://host/filenamewithourextension)
  **/
 
 class DownloadPlugin extends Plugin
@@ -51,7 +51,9 @@ class DownloadPlugin extends Plugin
 				break;
     		 	}
 		unlink($filePath);
+		$form->pluginurl->value = '';
 		$form->save();
+		Utils::redirect( URL::get( 'admin', 'page=plugins' ) );
 	}
 
 
@@ -62,10 +64,12 @@ class DownloadPlugin extends Plugin
 			$this->downloadplugin_pluginsPath = HABARI_PATH . '/user/plugins/';
 	  		$ui = new FormUI( 'Plugin download' );
 			if(is_writable($this->downloadplugin_pluginsPath)){
-		  		$url = $ui->append( 'text', 'pluginurl', 'download__pluginurl', _t('Plugin URL:', 'plugin_locale') );
+		  		$url = $ui->append( 'text', 'pluginurl', 'null:null', _t('Plugin URL:', 'plugin_locale') );
 		  		$ui->append('submit', 'Download', _t('Download', 'plugin_locale'));
 				$url->add_validator('url_validator', _t('The plugin_url field value must be a valid URL'));
 		  		$ui->on_success( array($this, 'formui_submit') );
+				//replace with width 100% when will be possible
+				$ui->pluginurl->size = 300;
 			}else{
 				$ui->append('static','disclaimer', _t( '<p><em><small>Plugins directory is not writable, check permissions and reload this page</small></em></p>') );
 			}
@@ -79,6 +83,11 @@ class DownloadPlugin extends Plugin
 	    $actions[] = _t('Install new plugin');
 	  }
 	  return $actions;
+	}
+
+	function action_update_check() 
+	{
+	  Update::add( 'Download Plugin', '2641A2EE-C7D1-11DF-AB1B-7133DFD72085', $this->info->version ); 
 	}
 }
 
